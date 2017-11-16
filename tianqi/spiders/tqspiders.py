@@ -10,13 +10,13 @@ class TqspidersSpider(scrapy.Spider):
     start_urls = [base_url]
 
     def parse(self, response):
-        city_list = response.xpath("//ul/div/li/a/@href").extract()[10:11]
-        city_name = response.xpath("//ul/div/li/a/text()").extract()[10:11]
+        city_list = response.xpath("//ul/div/li/a/@href").extract()
+        city_name = response.xpath("//ul/div/li/a/text()").extract()
         for name,link in zip(city_name,city_list):
             yield scrapy.Request(self.base_url+link, meta={"name":name}, callback=self.month_prase)
 
     def month_prase(self, response):
-        day_link = response.xpath("//tr/td/a/@href").extract()[3:4]
+        day_link = response.xpath("//tr/td/a/@href").extract()
         print "\n"
         print '请求当天情况'
         for link in day_link:
